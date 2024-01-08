@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { knex } from '../database'
 import { z } from 'zod'
+import { randomUUID } from 'node:crypto'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 export async function transactionsRoute(app: FastifyInstance) {
@@ -61,7 +62,7 @@ export async function transactionsRoute(app: FastifyInstance) {
 
     let sessionId = request.cookies.sessionId
     if (!sessionId) {
-      sessionId = crypto.randomUUID()
+      sessionId = randomUUID()
 
       reply.cookie('sessionId', sessionId, {
         path: '/',
@@ -70,7 +71,7 @@ export async function transactionsRoute(app: FastifyInstance) {
     }
 
     await knex('transactions').insert({
-      id: crypto.randomUUID(),
+      id: randomUUID(),
       title,
       amount: type === 'credit' ? amount : amount * -1,
       session_id: sessionId,
