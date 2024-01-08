@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": ">= 18"
+    "node": "18"
   },
   "dependencies": {
     "@fastify/cookie": "^9.2.0",
